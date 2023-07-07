@@ -21,5 +21,7 @@ module.exports = {
   },
   rules: {
     'no-console': 'off',
+    'arrow-parens': 'off',
+    'operator-linebreak': 'off',
   },
 };
