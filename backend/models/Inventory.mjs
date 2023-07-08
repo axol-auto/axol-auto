@@ -7,9 +7,12 @@ async function getCategoryId(name) {
   return result.rows?.[0]?.id || null;
 }
 
-const test = async () => {
-  const result = await query('select id from categories limit 1', []);
-  console.log(result);
+const getAllItems = async () => {
+  const result = await query(
+    'select a.id, a.name, a.price, b.name as category, c.name as subcategory, a.description, a.quantity, a.imageurl from inventory a left join categories b on a.category_id = b.id left join categories c on a.subcategory_id = c.id',
+    []
+  );
+  return result.rows;
 };
 
 const addNewItem = async ({
@@ -96,14 +99,15 @@ const getCategories = async () => {
 };
 
 const getItemsByCategory = async ({ id }) => {
-  const result = await query('select * from inventory where category_id = $1', [
-    id,
-  ]);
+  const result = await query(
+    'select a.id, a.name, a.price, b.name as category, c.name as subcategory, a.description, a.quantity, a.imageurl from inventory a left join categories b on a.category_id = b.id left join categories c on a.subcategory_id = c.id where category_id = $1',
+    [id]
+  );
   return result.rows;
 };
 
 export default {
-  test,
+  getAllItems,
   addNewItem,
   updateItem,
   // incrementInventoryQuantity,
