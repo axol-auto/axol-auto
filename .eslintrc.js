@@ -1,4 +1,6 @@
 module.exports = {
+  "import/no-extraneous-dependencies": 
+  ["error", {"devDependencies": true}],
   env: {
     browser: true,
     es2021: true,
