@@ -2,8 +2,8 @@ const HtmlWebPackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
 module.exports = {
-  mode: 'production',
-  _entry: './frontend/index.js',
+  mode: 'development',
+  entry: './frontend/index.js',
   output: {
     path: path.resolve(__dirname, 'frontend/dist'),
     publicPath: '/',
@@ -13,11 +13,11 @@ module.exports = {
     host: 'localhost',
     port: 8080,
     // match the output path
-    static: {
-      directory: path.resolve(__dirname, 'dist'),
-      // match the output 'publicPath'
-      publicPath: '/',
-    },
+    // static: { // TBD if images are needed.
+    //   directory: path.resolve(__dirname, 'dist'),
+    //   // match the output 'publicPath'
+    //   publicPath: '/',
+    // },
     // enable HMR on the devServer
     hot: true,
     // fallback to root for other urls
@@ -29,6 +29,11 @@ module.exports = {
          * routes api fetch requests from localhost:8080/api/* (webpack dev server)
          * to localhost:3000/api/* (where our Express server is running)
          */
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3000/',
+      },
+    },
   },
   module: {
     rules: [

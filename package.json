@@ -6,8 +6,7 @@
   "scripts": {
     "dev-backend": "nodemon backend/server.mjs",
     "start-backend": "node backend/server.mjs",
-    "dev-frontend": "webpack server --open",
-    "start-frontend": "node frontend/server.js",
+    "dev-frontend": "webpack serve --open",
     "build": "webpack"
   },
   "author": "",
@@ -42,6 +41,7 @@
     "prettier": "^3.0.0",
     "style-loader": "^3.3.3",
     "webpack": "^5.88.1",
-    "webpack-cli": "^5.1.4"
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1"
   }
 }
