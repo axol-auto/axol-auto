@@ -3,7 +3,8 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
-import userController from './controllers/usersController.js'
+import userController from './controllers/usersController.js';
+import userRouter from './routes/apiusers.js'
 
 dotenv.config();
 
@@ -14,9 +15,7 @@ app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 
-app.post('/api/createaccount', userController.createAccount, (req, res, next) => {
-  res.send('User created')
-});
+app.use('/api/users', userRouter);
 
 app.post('/api/login', userController.findUser, (req, res, next) => {
   res.send('Successful login')
