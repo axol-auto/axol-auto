@@ -23,5 +23,7 @@ module.exports = {
     'no-console': 'off',
     'arrow-parens': 'off',
     'operator-linebreak': 'off',
+    'comma-dangle': 'off',
+    'import/extensions': 'off',
   },
 };
