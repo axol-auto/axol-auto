@@ -1,9 +1,9 @@
 import dotenv from 'dotenv';
-import { Pool } from 'pg';
+import pg from 'pg';
 
 dotenv.config();
 
-const pool = new Pool({ connectionString: process.env.PG_URI });
+const pool = new pg.Pool({ connectionString: process.env.PG_URI });
 
 async function query(sql, params) {
   const client = await pool.connect();
