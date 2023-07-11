@@ -40,7 +40,7 @@ const HomeContainer = () => {
       <div className='place-content-center flex flex-col items-center category-container'>
         {categories.map((obj) => {
           return (
-            <a onClick={() => toCategory(obj.id, obj.name, obj.imageurl)}>
+            <a className='p-4 w-1/2 category border shadow-md rounded-md max-w-4xl border-solid' onClick={() => toCategory(obj.id, obj.name, obj.imageurl)}>
             <Category key={obj.id} category={obj.name} img={obj.imageurl}>
             </Category>
             </a>
