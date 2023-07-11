@@ -1,22 +1,28 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-
 import HomePage from './containers/HomePage';
+import NavBar from './components/NavBar';
+import Hero from './components/Hero';
+import CategoryContainer from './containers/CategoryContainer'
 
+
+/*
 const router = createBrowserRouter([
   {
     path: '/',
     element: <HomePage />
   },
 ])
+*/
 
 const App = () => {
   return (
-  <div>
-    <h1>APP BAR</h1>
-    <RouterProvider router={router} />
-  </div>
-  )
-}
+    <div>
+      <NavBar></NavBar>
+      <Hero></Hero>
+      <CategoryContainer></CategoryContainer>
+    </div>
+  );
+};
 
 export default App;

@@ -38,6 +38,10 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.jpeg/,
+        type: 'asset/resource'
+      },
+      {
         test: /.(js|jsx)$/,
         exclude: /node_modules/,
         use: {

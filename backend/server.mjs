@@ -4,6 +4,11 @@ import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 import path from 'path';
 import inventoryRouter from './routes/inventoryRouter.mjs';
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+console.log(__dirname);
 
 dotenv.config();
 
