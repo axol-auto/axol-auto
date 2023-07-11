@@ -3,18 +3,13 @@
 @tailwind utilities;
 
 * {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-  font-family: 'Roboto';
-
+  font-family: 'Roboto', sans-serif;
 }
 
 .banner-area {
   width: 100%;
   height: 45vh;
   background-size: cover;
-  background-image: url('../public/images/workbench.jpeg');
 }
 
 .content-area {
@@ -31,18 +26,26 @@
 
 .category {
   display: flex;
-  margin: 10px;
   border-bottom: 1px solid #DEDEDE;
 }
 
-img {
+img, .home-buttons {
   margin-left: auto;
+  display: inline-block;
 }
 
 .logo {
   border: none;
+  font-weight: 700;
 }
 
-.logo:hover {
-  background-color: blue;
+.browse-all {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.category-container {
+  justify-content: space-between;
 }

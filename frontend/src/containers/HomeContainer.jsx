@@ -12,20 +12,6 @@ const HomeContainer = () => {
   };
 
   const [categories, setCategories] = useState([]);
-
-  // pull category data from db
-  /*
-    GET '/api/inventory/category'
-    // Get all category names and image urls
-    // Array of categories
-    [
-      {
-        "id": 2,
-        "name": "test category 3",
-        "imageurl": null
-      }
-    ]
-  */
  
   useEffect(() => {
     fetch('http://localhost:3001/api/inventory/category')
@@ -37,10 +23,10 @@ const HomeContainer = () => {
   return (
     <div>
       <Hero />
-      <div className='place-content-center flex flex-col items-center category-container'>
+      <div className='mt-4 place-content-center flex flex-col items-center category-container space-y-1'>
         {categories.map((obj) => {
           return (
-            <a className='p-4 w-1/2 category border shadow-md rounded-md max-w-4xl border-solid' onClick={() => toCategory(obj.id, obj.name, obj.imageurl)}>
+            <a className='hover:bg-gray-50 p-4 w-5/6 category border shadow-md rounded-md border-solid' onClick={() => toCategory(obj.id, obj.name, obj.imageurl)}>
             <Category key={obj.id} category={obj.name} img={obj.imageurl}>
             </Category>
             </a>

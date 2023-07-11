@@ -4,11 +4,8 @@ import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 import path from 'path';
 import inventoryRouter from './routes/inventoryRouter.mjs';
-import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-console.log(__dirname);
 
 dotenv.config();
 
@@ -18,11 +15,15 @@ app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 
-app.use('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
-});
-
 app.use('/api/inventory', inventoryRouter);
+
+// JP - set up server-side request handling for React Router endpoints?
+/*
+app.use('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../../frontend/public/index.html'));
+});
+*/
+
 
 app.use((err, _req, res) => {
   const defaultErr = {
