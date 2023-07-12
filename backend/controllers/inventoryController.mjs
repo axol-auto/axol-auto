@@ -71,9 +71,9 @@ const getCategories = async (req, res, next) => {
 };
 
 const getCategoryById = async (req, res, next) => {
-  console.log(req.params);
+  // console.log(req.params);
   const result = await inventoryModel.getItemsByCategory(req.params);
-
+  // console.log(result);
   if (result.length) {
     console.log(`Retrieved ${result.length} items from category`);
     res.locals.data = result;
