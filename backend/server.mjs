@@ -3,6 +3,7 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 import inventoryRouter from './routes/inventoryRouter.mjs';
+import orderRouter from './routes/orderRouter.mjs';
 
 dotenv.config();
 
@@ -13,8 +14,9 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use('/api/inventory', inventoryRouter);
+app.use('/api/order', orderRouter);
 
-app.use((err, _req, res) => {
+app.use((err, _req, res, next) => {
   const defaultErr = {
     log: 'Express error handler caught unknown middleware error',
     status: 500,
