@@ -4,6 +4,7 @@ import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 import path from 'path';
 import inventoryRouter from './routes/inventoryRouter.mjs';
+import orderRouter from './routes/orderRouter.mjs';
 import { fileURLToPath } from 'url';
 
 
@@ -16,16 +17,9 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use('/api/inventory', inventoryRouter);
+app.use('/api/order', orderRouter);
 
-// JP - set up server-side request handling for React Router endpoints?
-/*
-app.use('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../../frontend/public/index.html'));
-});
-*/
-
-
-app.use((err, _req, res) => {
+app.use((err, _req, res, next) => {
   const defaultErr = {
     log: 'Express error handler caught unknown middleware error',
     status: 500,
