@@ -3,12 +3,16 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 import path from 'path';
+import bcrypt from 'bcrypt';
+import userController from './controllers/usersController.mjs';
+import userRouter from './routes/apiusers.mjs'
 import inventoryRouter from './routes/inventoryRouter.mjs';
 import orderRouter from './routes/orderRouter.mjs';
 
 dotenv.config();
 
 const app = express();
+let users = [];
 
 app.use(cors());
 app.use(express.json());
@@ -17,6 +21,8 @@ app.use(cookieParser());
 app.use('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
 });
+
+app.use('/api/users', userRouter);
 
 app.use('/api/inventory', inventoryRouter);
 app.use('/api/order', orderRouter);
