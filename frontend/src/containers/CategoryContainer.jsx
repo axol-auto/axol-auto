@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import NavBar from '../components/NavBar';
-import Category from '../components/Category';
+import CategoryLabel from '../components/categoryComponents/CategoryLabel'
 
 const CategoryContainer = () => {
     const location = useLocation();
@@ -20,10 +20,8 @@ const CategoryContainer = () => {
     return (
       <div>
         <NavBar />
-        <div className='ml-40 mr-40 shadow-md flex items-center mt-4  border border-solid rounded-md'>
-          <h2 className='ml-7 text-xl inline'>{location.state.name}</h2>
-          <img className='max-h-20 mr-7' src={location.state.url}></img>
-        </div>
+        <CategoryLabel />
+
       </div>
     )
 }
