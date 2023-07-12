@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Category from '../components/Category';
 import Hero from '../components/Hero';
+import NavBar from '../components/NavBar';
 
 const HomeContainer = () => {
 
@@ -22,6 +23,7 @@ const HomeContainer = () => {
   // render Category components with array
   return (
     <div>
+      <NavBar></NavBar>
       <Hero />
       <div className='mt-4 place-content-center flex flex-col items-center category-container space-y-1'>
         {categories.map((obj) => {

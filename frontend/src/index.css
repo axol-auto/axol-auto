@@ -36,10 +36,10 @@ img, .home-buttons {
 
 .logo {
   border: none;
-  font-weight: 700;
+  font-size: 18px;
 }
 
-.browse-all {
+.browse-all, .submit-login {
   padding-top: 5px;
   padding-bottom: 5px;
   padding-left: 16px;
@@ -48,4 +48,7 @@ img, .home-buttons {
 
 .category-container {
   justify-content: space-between;
+}
+
+form {
 }

@@ -1,7 +1,8 @@
-import React, { Fragment } from 'react';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import React from 'react';
 import HomeContainer from './containers/HomeContainer';
 import NavBar from './components/NavBar';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import LoginContainer from './containers/LoginContainer';
 import CategoryContainer from './containers/CategoryContainer';
 
 const router = createBrowserRouter([
@@ -12,13 +13,17 @@ const router = createBrowserRouter([
   {
     path: '/category',
     element: <CategoryContainer />
+  },
+  {
+    path: '/login',
+    element: <LoginContainer />
   }
 ])
+
 
 const App = () => {
   return (
     <div>
-      <NavBar></NavBar>
       <RouterProvider router={router} />
     </div>
   );
