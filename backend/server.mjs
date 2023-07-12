@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
 import userController from './controllers/usersController.mjs';
 import userRouter from './routes/apiusers.mjs'
+import inventoryRouter from './routes/inventoryRouter.mjs';
 
 dotenv.config();
 
@@ -17,6 +18,7 @@ app.use(cookieParser());
 
 app.use('/api/users', userRouter);
 
+app.use('/api/inventory', inventoryRouter);
 
 app.listen(process.env.PORT, () => {
   console.log(`Listening on port ${process.env.PORT}`);
