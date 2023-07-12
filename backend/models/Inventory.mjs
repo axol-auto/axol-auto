@@ -1,65 +1,117 @@
 import query from './query.mjs';
 
-const test = async () => {
-  const result = await query('select id from categories limit 1', []);
-  console.log(result);
+async function getCategoryId(name) {
+  const result = await query('select id from categories where name ilike $1', [
+    name,
+  ]);
+  return result.rows?.[0]?.id || null;
+}
+
+const getAllItems = async () => {
+  const result = await query(
+    'select a.id, a.name, a.price, b.name as category, c.name as subcategory, a.description, a.quantity, a.imageurl from inventory a left join categories b on a.category_id = b.id left join categories c on a.subcategory_id = c.id',
+    []
+  );
+  return result.rows;
 };
 
-const addNewItem = async (
+const addNewItem = async ({
   name,
   price,
   category,
   subcategory,
+  quantity,
   description = '',
-  imgurl = '',
-  quantity = 0
-) => {
-  const categoryResult = await query(
-    'select id from categories where name ilike $1',
-    [category]
-  );
-  const categoryId = categoryResult.rows[0]?.id || null;
-  const subcategoryResult = await query(
-    'select id from categories where name ilike $1',
-    [subcategory]
-  );
-  const subcategoryId = subcategoryResult.rows[0]?.id || null;
+  imageurl = '',
+}) => {
+  const categoryId = await getCategoryId(category);
+  const subcategoryId = await getCategoryId(subcategory);
 
   const sql =
-    'insert into inventory (name, price, category, subcategory, description, imgurl, quantity) values ($1, $2, $3, $4, $5, $6, $7)';
+    'insert into inventory (name, price, category_id, subcategory_id, description, imageurl, quantity) values ($1, $2, $3, $4, $5, $6, $7)';
   const result = await query(sql, [
     name,
     price,
     categoryId,
     subcategoryId,
     description,
-    imgurl,
+    imageurl,
     quantity,
   ]);
 
-  return result;
+  return result.rowCount || result.message;
 };
 
-const updateItem = () => {};
+const updateItem = async ({
+  id,
+  name,
+  price,
+  category,
+  subcategory,
+  quantity,
+  description,
+  imageurl,
+}) => {
+  const categoryId = await getCategoryId(category);
+  const subcategoryId = await getCategoryId(subcategory);
 
-const incrementInventoryQuantity = () => {};
+  const sql =
+    'update inventory set name = $1, price = $2, category_id = $3, subcategory_id = $4, quantity = $5, description = $6, imageurl = $7 where id = $8';
+  const result = await query(sql, [
+    name,
+    price,
+    categoryId,
+    subcategoryId,
+    quantity,
+    description,
+    imageurl,
+    id,
+  ]);
 
-const decrementInventoryQuantity = () => {};
+  // console.log(result.rowCount);
+  return result.rowCount > 0;
+};
 
-const addCategory = () => {};
+// const incrementInventoryQuantity = () => {};
 
-const updateCategory = () => {};
+// const decrementInventoryQuantity = () => {};
 
-const getCategories = () => {};
+const addCategory = async ({ name, imageurl }) => {
+  const categoryId = await getCategoryId(name);
+  if (categoryId) return new Error('Duplicate category');
 
-const getItemsByCategory = () => {};
+  const sql = 'insert into categories (name, imageurl) values ($1, $2)';
+  const result = await query(sql, [name, imageurl]);
+
+  return result.rowCount || result.message;
+};
+
+const updateCategory = async ({ id, name, imageurl }) => {
+  const sql = 'update categories set name = $1, imageurl = $2 where id = $3';
+  const result = await query(sql, [name, imageurl, id]);
+
+  return result.rowCount > 0;
+};
+
+const getCategories = async () => {
+  const result = await query('select * from categories', []);
+  return result.rows;
+};
+
+const getItemsByCategory = async ({ id }) => {
+  const result = await query(
+    'select a.id, a.name, a.price, b.name as category, c.name as subcategory, a.description, a.quantity, a.imageurl from inventory a left join categories b on a.category_id = b.id left join categories c on a.subcategory_id = c.id where category_id = $1',
+    [id]
+  );
+  return result.rows;
+};
 
 export default {
-  test,
+  getAllItems,
   addNewItem,
   updateItem,
-  incrementInventoryQuantity,
-  decrementInventoryQuantity,
+  // incrementInventoryQuantity,
+  // decrementInventoryQuantity,
   addCategory,
   updateCategory,
   getCategories,

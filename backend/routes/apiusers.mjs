@@ -10,7 +10,7 @@ router.post('/login',  userController.findUser, userController.createSession, (r
     res.send('successful login and session created')
 })
 
-router.get('/orders', userController.checkSession, userController.createSession, (req, res, next) => {
+router.get('/checkSession', userController.checkSession, userController.createSession, (req, res, next) => {
     res.send('Token authenticated and refreshed')
 })
 export default router;

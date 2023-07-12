@@ -4,15 +4,12 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "dev-backend": "nodemon backend/server.mjs",
-    "start-backend": "node backend/server.mjs",
-    "dev-frontend": "webpack server --open",
-    "start-frontend": "node frontend/server.js"
+    "dev": "nodemon server.mjs",
+    "start": "node server.mjs"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bcrypt": "^5.1.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",

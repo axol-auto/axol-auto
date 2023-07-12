@@ -46,6 +46,16 @@ userController.findUser = async (req, res, next) => {
     }
 }
 
+userController.checkAdmin = (req, res, next) => {
+  const role = res.locals.user.role;
+  if(role.toLowerCase() === 'admin'){
+  return next();
+  } else return next({
+    log: 'Express error handler caught error verifying admin status at checkAdmin',
+    status: 400,
+    message: { err: 'User does not have admin permission' },})
+}
+
 userController.createSession = async (req, res, next) => {
   const username = res.locals.user.username;
   const randomString = crypto.randomBytes(15).toString('hex');
@@ -71,13 +81,20 @@ userController.checkSession = (req, res, next) => {
   const username = req.cookies.username;
   if (!token) res.status(401).send('There is no token');
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, async (err, tokenString) => {
-    if(err) return res.status(403).send('Token is not valid');
-    // res.locals.user = user;
+    if(err) {
+      return next({
+    log: 'Express error handler caught error verifying token at checkSession',
+    status: 400,
+    message: { err: 'Token is invalid' },})
+  }
     let dateNow = new Date();
     let user = await userModel.findUser(username)
     let expireDate = user[0].session_expiration;
     if(dateNow.getTime() > expireDate.getTime()){
-      res.send('Session is expired')
+        return next({
+      log: 'Express error handler caught error verifying expiration date at checkSession',
+      status: 400,
+      message: { err: 'Token is expired, need to login' },})
     } else {
       res.locals.user = user[0];
       // console.log(user[0])

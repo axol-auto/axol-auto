@@ -8,7 +8,7 @@ const createUser = async (username, password, email) => {
 };
 
 const findUser = async (username, email) => {
-  const sql = 'select * from users where username = $1 or email = $2';
+  const sql = 'select * from users where username ilike $1 or email ilike $2';
   const result = await query(sql, [username, email]);
   return result.rows;
 };

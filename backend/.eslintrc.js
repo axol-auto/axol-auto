@@ -1,11 +1,9 @@
 module.exports = {
-  "import/no-extraneous-dependencies": 
-  ["error", {"devDependencies": true}],
   env: {
     browser: true,
     es2021: true,
   },
-  extends: 'airbnb-base',
+  extends: ['airbnb-base', 'prettier'],
   overrides: [
     {
       env: {
@@ -27,5 +25,7 @@ module.exports = {
     'operator-linebreak': 'off',
     'comma-dangle': 'off',
     'import/extensions': 'off',
+    'no-restricted-syntax': 'off',
+    'no-await-in-loop': 'off',
   },
 };
