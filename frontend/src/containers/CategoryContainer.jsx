@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 
 import NavBar from '../components/NavBar';
 import CategoryLabel from '../components/categoryComponents/CategoryLabel'
+import Parts from '../components/categoryComponents/Parts'
 
 const CategoryContainer = () => {
     const location = useLocation();
@@ -12,16 +13,14 @@ const CategoryContainer = () => {
     useEffect(() => {
       fetch(`http://localhost:3001/api/inventory/category/${location.state.id}`)
       .then((data) => data.json())
-      .then((data) => {
-        setParts(data);
-      });
+      .then((data) => setParts(data))
     }, []);
 
     return (
       <div>
         <NavBar />
         <CategoryLabel />
-
+        <Parts />
       </div>
     )
 }
@@ -51,26 +50,4 @@ export default CategoryContainer;
       &plus;
     </button>
   </div>
-
-ml-10
-w-3/4 
-
-flex-row 
-w-full
-space-y-1
-
-flex
-flex-col
-items-center
-category-container
-place-content-center
-
-hover:bg-gray-50
-
-category
-
-
-
-
-
 */
