@@ -9,6 +9,9 @@ import userRouter from './routes/apiusers.mjs'
 import inventoryRouter from './routes/inventoryRouter.mjs';
 import orderRouter from './routes/orderRouter.mjs';
 import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+
+const __dirname = path.dirname(__filename);
 
 
 dotenv.config();
@@ -20,14 +23,15 @@ app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 
-app.use('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
-});
 
 app.use('/api/users', userRouter);
 
 app.use('/api/inventory', inventoryRouter);
 app.use('/api/order', orderRouter);
+
+app.use('/', (req, res) => {  
+  res.sendFile(path.join(__dirname, '../frontend/public/index.html'));
+});
 
 app.use((err, _req, res, next) => {
   const defaultErr = {

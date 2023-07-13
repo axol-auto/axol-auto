@@ -11,16 +11,15 @@ const userController = {
 }
 
 userController.createAccount = async (req, res, next) => {
-    try {
-        //This generates a new hashed password, and adds salt in one line
-        const hashedPassword = await bcrypt.hash(req.body.password, 10);
-        const user = await userModel.createUser(req.body.username, hashedPassword, req.body.email);
-        console.log(user)
-        next();
-    } catch {
-        res.status(500).send('Unable to create account');
-      }
-}
+    //This generates a new hashed password, and adds salt in one line
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    const user = await userModel.createUser(req.body.username, hashedPassword, req.body.email);
+
+    if (user['severity']) return next('error');
+    else {
+      return next();
+    }
+  }
 
 userController.findUser = async (req, res, next) => {
   const { input, password } = req.body;
@@ -32,17 +31,17 @@ userController.findUser = async (req, res, next) => {
     user = await userModel.findUser(input, null);
   }
   //If the user is not found, unable to login
-  if(user.length <= 0) res.status(500).send('Unable to login');
+  if(user.length <= 0) return res.status(500).json('Unable to login');  // JP - added return
   //Compare the input password to the stored hashed password
   try {
     if(await bcrypt.compare(password, user[0].password)){
       res.locals.user = user[0];
       next();
     } else {
-        res.send('Unable to login');
+        res.json('Unable to login');
       }
   } catch {
-        res.status(500).send('bcrypt not working');
+        res.status(500).json('bcrypt not working');
     }
 }
 
@@ -79,7 +78,7 @@ userController.createSession = async (req, res, next) => {
 userController.checkSession = (req, res, next) => {
   const token = req.cookies.token;
   const username = req.cookies.username;
-  if (!token) res.status(401).send('There is no token');
+  if (!token) res.status(401).json('There is no token');
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, async (err, tokenString) => {
     if(err) {
       return next({
