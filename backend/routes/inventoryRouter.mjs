@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import inventoryController from '../controllers/inventoryController.mjs';
+import userController from '../controllers/usersController.mjs';
 
 const router = Router();
 
@@ -7,7 +8,7 @@ router.get('/', inventoryController.getAllItems, (req, res) =>
   res.json(res.locals.data)
 );
 
-router.post('/item', inventoryController.newItem, (_req, res) =>
+router.post('/item', userController.checkSession, userController.checkAdmin, userController.createSession, inventoryController.newItem, (_req, res) =>
   res.send('Added item to inventory')
 );
 
