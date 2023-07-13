@@ -49,3 +49,11 @@ img, .home-buttons {
 .category-container {
   justify-content: space-between;
 }
+
+.hover-trigger .hover-target {
+  display: none;
+}
+
+.hover-trigger:hover .hover-target {
+  display: block;
+}
