@@ -3,8 +3,9 @@ import query from './query.mjs';
 const createUser = async (username, password, email) => {
   const sql =
     'insert into users (username, password, email) values ($1, $2, $3)';
-  const result = await query(sql, [username, password, email]);
-  return result;
+    const result = await query(sql, [username, password, email]);
+    return result;
+
 };
 
 const findUser = async (username, email) => {
