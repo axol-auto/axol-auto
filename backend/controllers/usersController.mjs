@@ -12,8 +12,12 @@ const userController = {
 
 userController.createAccount = async (req, res, next) => {
     //This generates a new hashed password, and adds salt in one line
+    const email = req.body.email;
+    if(!email.includes('@')){
+      return res.json('Not a valid email')
+    }
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
-    const user = await userModel.createUser(req.body.username, hashedPassword, req.body.email);
+    const user = await userModel.createUser(req.body.username, hashedPassword, email);
 
     if (user['severity']) return next('error');
     else {
@@ -96,7 +100,6 @@ userController.checkSession = (req, res, next) => {
       message: { err: 'Token is expired, need to login' },})
     } else {
       res.locals.user = user[0];
-      // console.log(user[0])
       next();
     }
   })
