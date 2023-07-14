@@ -1,65 +1,67 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { json, useLocation } from 'react-router-dom';
 
 const Parts = () => {
     const location = useLocation();
-
-    const [isAdded, setIsAdded] = useState(false)
-
-    // When ADD TO CART is clicked set state "setIsAdded" to true.
-    // Send a POST to the database table carts.
-    const addToCart = () => {}
-
-
-    // onClick={}
-    const button = (
-        <button 
-        class="px-6 py-1 transition ease-in duration-200 rounded-full hover:bg-gray-800 hover:text-white border-2 border-gray-900 focus:outline-none items-center mt-2" 
-        > 
-        ADD TO CART
-        </button>
-    )
     
-    // ******************************
-
-    const quantityCount = (
-        <div class="flex items-center mb-2 mt-1">
-            <button
-            type="button"
-            class="w-10 py-1 mr-auto hover:bg-gray-300 rounded-full transition ease-in duration-200 border"
-            >
-            -
-            </button>
-
-            <input
-            type="number"
-            id="Quantity"
-            value="1"
-            class="w-16 py-1 border-transparent text-center [-moz-appearance:_textfield] sm:text-sm [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none"
-            />
-
-            <button
-            type="button"
-            class="w-10 py-1 ml-auto hover:bg-gray-300 rounded-full transition ease-in duration-200 border"
-            >
-            +
-            </button>
-        </div>
-    )
-
-    // ******************************
-
     const [parts, setParts] = useState([]);
-    
+    const [isAdded, setIsAdded] = useState(false)
+    const [quantity, setQuantity] = useState({})
+  
+
+    // When ADD TO CART is clicked and the response is OK,
+    // set state "setIsAdded" to true.
+
+    // Send a POST to the database table carts.
+    const addToCart = (partID) => {
+        console.log('Add to Cart was clicked')
+
+        // POST needs userID, [{items, quantity}]
+        const data = {
+            userId: 10, // TBD ******************************
+            items: [{
+                itemId: partID,
+                quantity: quantity[partID]
+            }]
+        }
+
+        fetch(`http://localhost:3001/api/cart`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        })
+        .then((data) => data.json())
+        .then((jsonData) => console.log(jsonData))
+
+        // Reset all quantities to 1 in state
+        const temporaryObj = {}
+        for (let id in quantity) {
+            temporaryObj[id] = 1
+        }
+        setQuantity(temporaryObj)
+    }
+
+
     useEffect(() => {
         fetch(`http://localhost:3001/api/inventory/category/${location.state.id}`)
         .then((data) => data.json())
-        .then((jsonData) => setParts(jsonData))
+        .then((jsonData) => {
+            setParts(jsonData)
+
+            const tempObj = {}
+            jsonData.forEach((obj) => {
+                tempObj[obj.id] = 1
+            })
+            setQuantity(tempObj)
+        })
     }, [])
     
+
     const part = parts.map((obj) => {
         return (
-            <div className='flex flex-row items-center border-2 w-full rounded-[16px]'>
+            <div key={obj.id} className='flex flex-row items-center border-2 w-full rounded-[16px]'>
                 {/* Name */}
                 <div className='ml-7 font-semibold'>
                     {obj.name}
@@ -67,15 +69,13 @@ const Parts = () => {
 
 
                 <div className='ml-auto mr-2 flex flex-row items-center'>
-
                     {/* Description */}
                     <div class="relative hover-trigger mr-96">
-                        Description
-                        <div class="absolute bg-white border border-grey-100 px-4 py-2 hover-target rounded-[12px]">
+                        Description 
+                        <div class="absolute w-96 bg-white border border-grey-100 px-4 py-2 hover-target rounded-[12px]">
                             {obj.description}
                         </div>
                     </div>
-
                 
                     {/* Price */}
                     <div className='mr-20 flex flex-row'>
@@ -84,8 +84,31 @@ const Parts = () => {
 
                     {/* Buttons */}
                     <div>
-                        {button}
-                        {quantityCount}
+                        {/* addCartButton */}
+                        <button class="px-6 py-1 transition ease-in duration-200 rounded-full hover:bg-gray-800 hover:text-white border-2 border-gray-900 focus:outline-none items-center mt-2" 
+                        onClick={() => {addToCart(obj.id)}}> 
+                            ADD TO CART
+                        </button>
+                        {/* Quantity Button */}
+                        <div class="flex items-center mb-2 mt-1">
+                            <button
+                            type="button"
+                            class="w-10 py-1 mr-auto hover:bg-gray-300 rounded-full transition ease-in duration-200 border"
+                            >
+                            -
+                            </button>
+
+                            <div>
+                                {quantity[obj.id]}
+                            </div>
+
+                            <button
+                            type="button"
+                            class="w-10 py-1 ml-auto hover:bg-gray-300 rounded-full transition ease-in duration-200 border"
+                            >
+                            +
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
