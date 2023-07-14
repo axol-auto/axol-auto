@@ -5,6 +5,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import LoginContainer from './containers/LoginContainer';
 import CategoryContainer from './containers/CategoryContainer';
 import SignUpContainer from './containers/SignUpContainer';
+import CartContainer from './containers/CartContainer';
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
   {
     path: '/signup',
     element: <SignUpContainer />
+  },
+  {
+    path: '/cart',
+    element: <CartContainer />
   }
 ])
 
