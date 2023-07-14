@@ -4,7 +4,7 @@ import cartModel from '../models/Cart.mjs';
 
 dotenv.config();
 
-const url = `http://localhost:${process.env.PORT}`;
+const url = `http://localhost:3000`;
 
 const checkout = async (req, res, _next) => {
   const items = cartModel.getCart(res.body);

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Category from '../components/Category';
 import Hero from '../components/Hero';
 import NavBar from '../components/NavBar';
+import CartContainer from './CartContainer';
 
 const HomeContainer = () => {
 
@@ -38,6 +39,7 @@ const HomeContainer = () => {
           );
         })}
       </div>
+      <CartContainer />
     </div>
   );
 
