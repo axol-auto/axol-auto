@@ -11,7 +11,7 @@ const CategoryContainer = () => {
     const [parts, setParts] = useState([]);
 
     useEffect(() => {
-      fetch(`http://localhost:3001/api/inventory/category/${location.state.id}`)
+      fetch(`http://localhost:3000/api/inventory/category/${location.state.id}`)
       .then((data) => data.json())
       .then((data) => setParts(data))
     }, []);

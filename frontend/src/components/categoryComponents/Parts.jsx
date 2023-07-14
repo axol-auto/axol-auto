@@ -25,7 +25,7 @@ const Parts = () => {
             }]
         }
 
-        fetch(`http://localhost:3001/api/cart`, {
+        fetch(`http://localhost:3000/api/cart`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -45,14 +45,14 @@ const Parts = () => {
 
 
     useEffect(() => {
-        fetch(`http://localhost:3001/api/inventory/category/${location.state.id}`)
+        fetch(`http://localhost:3000/api/inventory/category/${location.state.id}`)
         .then((data) => data.json())
         .then((jsonData) => {
             setParts(jsonData)
 
             const tempObj = {}
             jsonData.forEach((obj) => {
-                tempObj[obj.id] = 1
+                tempObj[obj.id] = 0
             })
             setQuantity(tempObj)
         })
