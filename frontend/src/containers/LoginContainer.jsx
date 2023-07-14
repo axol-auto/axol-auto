@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import NavBar from '../components/NavBar';
 import { useNavigate } from 'react-router-dom';
+import { Context } from '../components/Context';
 
 const LoginContainer = () => {
   const [invalidLogin, setInvalidLogin] = useState(false);
-
+  const { userId, setUserId } = useContext(Context);
+  const updateId = (userId) => setUserId(userId);
+  
   const navigate = useNavigate();
 
   const toHome = () => {
@@ -36,6 +39,8 @@ const LoginContainer = () => {
         .then((data) => data.json())
         .then((data) => {
           if (data[0] === 'successful login and session created') {
+            // update state with userId
+            updateId(data[1]);
             toHome();
           }
           else {
