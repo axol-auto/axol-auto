@@ -35,17 +35,16 @@ const LoginContainer = () => {
           })})
         .then((data) => data.json())
         .then((data) => {
-          if (data === 'successful login and session created') toHome();
+          if (data[0] === 'successful login and session created') {
+            toHome();
+          }
           else {
             // invalid credentials
-            console.log('FAIL');
             setInvalidLogin(true);
           }
         })
         .catch((err) => {
           console.log(err);
-          console.log('hi, you hit me!');
-          return;
         });
       }}
        className='text-white mb-5 submit-login hover:bg-sky-500 bg-sky-600 rounded-full text-md border-solid border border-sky-500'>Submit</button>
