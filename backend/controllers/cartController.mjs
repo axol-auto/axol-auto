@@ -5,7 +5,7 @@ const syncCart = async (req, res, next) => {
 
   console.log(result);
 
-  if (result.length === undefined) {
+  if (result === undefined) {
     return next({ message: { err: 'Cart not updated' } });
   }
 
@@ -14,6 +14,20 @@ const syncCart = async (req, res, next) => {
   return next();
 };
 
+const getCart = async (req, res, next) => {
+  const result = await cartModel.getCart(req.query);
+
+  console.log(result);
+
+  if (result === undefined) {
+    return next({ message: { err: 'Error querying the database for cart' } });
+  }
+
+  res.locals.cart = result;
+  return next();
+};
+
 export default {
   syncCart,
+  getCart,
 };
