@@ -17,4 +17,28 @@ async function query(sql, params) {
   }
 }
 
+// export async function transaction(queries) {
+//   const client = await pool.connect();
+//   const result = [];
+
+//   await client.query('BEGIN');
+
+//   try {
+//     for (const q of queries) {
+//       const params = result.length
+//         ? [...q.params, result[result.length - 1].rows[0].id]
+//         : q.params;
+//       result.push(await client.query(q.sql, params));
+//     }
+//     await client.query('COMMIT');
+//   } catch (e) {
+//     result.push(e);
+//     await client.query('ROLLBACK');
+//   } finally {
+//     client.release();
+//   }
+
+//   return result;
+// }
+
 export default query;

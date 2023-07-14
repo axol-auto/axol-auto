@@ -1,17 +1,22 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 
 const NavBar = () => {
   // check whether user is logged in
-
-
+  const navigate = useNavigate();
+  const toHome = () => {
+    navigate('/');
+  };
+  const toLogin = () => {
+    navigate('/login');
+  };
 
   return (
     <div className='text-white flex h-14 bg-sky-600 items-center'>
-      <button className='p-2 logo ml-2 text-lg'>AXOL-AUTO</button>
+      <button onClick={() => toHome()} className='p-2 logo ml-2 text-lg'>AXOL-AUTO</button>
       <div className='home-buttons'>
-      <button className='p-2 hover:text-sky-800'>Log in</button>
-      <button className='p-2 mr-2 hover:text-sky-800'>Sign up</button>
+      <button onClick={() => toLogin()} className='p-2 hover:text-sky-800'>Log in</button>
       </div>
     </div>
   );

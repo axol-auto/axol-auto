@@ -25,5 +25,7 @@ module.exports = {
     'operator-linebreak': 'off',
     'comma-dangle': 'off',
     'import/extensions': 'off',
+    'no-restricted-syntax': 'off',
+    'no-await-in-loop': 'off',
   },
 };
