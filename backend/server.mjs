@@ -3,13 +3,14 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 import path from 'path';
-import bcrypt from 'bcrypt';
-import userController from './controllers/usersController.mjs';
+// import bcrypt from 'bcrypt';
+import { fileURLToPath } from 'url';
+// import userController from './controllers/usersController.mjs';
 import userRouter from './routes/apiusers.mjs';
 import inventoryRouter from './routes/inventoryRouter.mjs';
 import orderRouter from './routes/orderRouter.mjs';
 import cartRouter from './routes/cartRouter.mjs';
-import { fileURLToPath } from 'url';
+
 const __filename = fileURLToPath(import.meta.url);
 
 const __dirname = path.dirname(__filename);

@@ -15,7 +15,7 @@ const syncCart = async (req, res, next) => {
 };
 
 const getCart = async (req, res, next) => {
-  const result = await cartModel.getCart(req.body);
+  const result = await cartModel.getCart(req.query);
 
   console.log(result);
 
