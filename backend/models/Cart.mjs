@@ -20,6 +20,15 @@ const syncCart = async ({ userId, items }) => {
   return results.rows;
 };
 
+const getCart = async ({ userId }) => {
+  const result = await query('select * from carts where user_id = $1', [
+    userId,
+  ]);
+
+  return result.rows;
+};
+
 export default {
   syncCart,
+  getCart,
 };
