@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
+import { Context } from '../components/Context';
 
 import NavBar from '../components/NavBar';
 import CategoryLabel from '../components/categoryComponents/CategoryLabel'
@@ -7,7 +8,7 @@ import Parts from '../components/categoryComponents/Parts'
 
 const CategoryContainer = () => {
     const location = useLocation();
-
+    const { userId } = useContext(Context);
     const [parts, setParts] = useState([]);
 
     useEffect(() => {
