@@ -43,6 +43,7 @@ const HomeContainer = () => {
           );
         })}
       </div>
+      <CartContainer />
     </div>
   );
 

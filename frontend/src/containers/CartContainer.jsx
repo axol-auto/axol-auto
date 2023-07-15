@@ -5,6 +5,7 @@ import NavBar from '../components/NavBar';
 const CartContainer = () => {
 
     // need to get user ID somehow
+
     const userId = 1;
 
     const [items, setItems] = useState([]);
@@ -20,10 +21,12 @@ const CartContainer = () => {
       .catch();
     }, []);
 
+
     // 
     return (
       <div>
         <NavBar></NavBar>
+
         <div className=''>
           {items.map((obj) => {
             return (
