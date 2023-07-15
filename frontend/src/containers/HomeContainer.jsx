@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import Category from '../components/Category';
 import Hero from '../components/Hero';
 import NavBar from '../components/NavBar';
+import { useContext } from 'react';
+import { Context } from '../components/Context';
 
 const HomeContainer = () => {
 
@@ -14,6 +16,8 @@ const HomeContainer = () => {
 
   const [categories, setCategories] = useState([]);
  
+  const { userId } = useContext(Context);
+
   useEffect(() => {
     fetch('http://localhost:3000/api/inventory/category')
     .then((data) => {
@@ -27,6 +31,7 @@ const HomeContainer = () => {
   return (
     <div>
       <NavBar></NavBar>
+      <div>{userId}</div>
       <Hero />
       <div className='mt-4 place-content-center flex flex-col items-center category-container space-y-1'>
         {categories.map((obj) => {
