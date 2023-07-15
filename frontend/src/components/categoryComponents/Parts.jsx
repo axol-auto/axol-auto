@@ -18,7 +18,7 @@ const Parts = () => {
 
         // POST needs userID, [{items, quantity}]
         const data = {
-            userId: 10, // TBD ******************************
+            userId: 10, // Hardcoded for now. Need global state userId.
             items: [{
                 itemId: partID,
                 quantity: quantity[partID]
@@ -35,12 +35,19 @@ const Parts = () => {
         .then((data) => data.json())
         .then((jsonData) => console.log(jsonData))
 
-        // Reset all quantities to 1 in state
+        // Reset all quantities to 0 in state
         const temporaryObj = {}
         for (let id in quantity) {
-            temporaryObj[id] = 1
+            temporaryObj[id] = 0
         }
         setQuantity(temporaryObj)
+    }
+
+    const changeQuantity = (flag, id) => {
+        // True is passed in with the + button.
+        // False is passed in with the - button.
+        if (flag) setQuantity({...quantity, [id]: quantity[id] + 1})
+        else if (!flag) setQuantity({...quantity, [id]: quantity[id] - 1})
     }
 
 
@@ -94,8 +101,9 @@ const Parts = () => {
                             <button
                             type="button"
                             class="w-10 py-1 mr-auto hover:bg-gray-300 rounded-full transition ease-in duration-200 border"
+                            onClick={() => {changeQuantity(false, obj.id)}}
                             >
-                            -
+                                -
                             </button>
 
                             <div>
@@ -105,8 +113,9 @@ const Parts = () => {
                             <button
                             type="button"
                             class="w-10 py-1 ml-auto hover:bg-gray-300 rounded-full transition ease-in duration-200 border"
+                            onClick={() => {changeQuantity(true, obj.id)}}
                             >
-                            +
+                                +
                             </button>
                         </div>
                     </div>
