@@ -19,6 +19,7 @@ const CategoryContainer = () => {
 
     return (
       <div>
+        <div>{parts.id}</div>
         <NavBar />
         <CategoryLabel />
         <Parts />
