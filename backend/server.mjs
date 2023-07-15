@@ -10,6 +10,7 @@ import userRouter from './routes/apiusers.mjs';
 import inventoryRouter from './routes/inventoryRouter.mjs';
 import orderRouter from './routes/orderRouter.mjs';
 import cartRouter from './routes/cartRouter.mjs';
+import checkoutRouter from './routes/checkoutRouter.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 
@@ -18,7 +19,7 @@ const __dirname = path.dirname(__filename);
 dotenv.config();
 
 const app = express();
-let users = [];
+// let users = [];
 
 app.use(cors());
 app.use(express.json());
@@ -29,6 +30,7 @@ app.use('/api/users', userRouter);
 app.use('/api/inventory', inventoryRouter);
 app.use('/api/order', orderRouter);
 app.use('/api/cart', cartRouter);
+app.use('/api/checkout', checkoutRouter);
 
 app.use('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/public/index.html'));
