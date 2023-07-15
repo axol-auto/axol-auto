@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import crypto from 'crypto';
+import { identifier } from '@babel/types';
 
 dotenv.config();
 
@@ -61,11 +62,13 @@ userController.checkAdmin = (req, res, next) => {
 
 userController.createSession = async (req, res, next) => {
   const username = res.locals.user.username;
+  const id = res.locals.user.id;
   const randomString = crypto.randomBytes(15).toString('hex');
   const email = res.locals.user.email;
   const accessToken = jwt.sign(randomString, process.env.ACCESS_TOKEN_SECRET);
   res.cookie('token', accessToken, { httpOnly: true, secure: true, maxAge: 1000 * 60 * 60 * 24});
   res.cookie('username', username, { httpOnly: true, secure: true, maxAge: 1000 * 60 * 60 * 24});
+  res.cookie('id', id, { httpOnly: true, secure: true, maxAge: 1000 * 60 * 60 * 24});
   //Current time
   const date = new Date();
   //Function adds 30 seconds to current time
