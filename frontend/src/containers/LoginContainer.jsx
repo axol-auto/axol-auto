@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import NavBar from '../components/NavBar';
 import { useNavigate } from 'react-router-dom';
+import { Context } from '../components/Context';
 
 const LoginContainer = () => {
   const [invalidLogin, setInvalidLogin] = useState(false);
-
+  const { userId, setUserId } = useContext(Context);
+  const updateId = (userId) => setUserId(userId);
+  
   const navigate = useNavigate();
 
   const toHome = () => {
@@ -35,17 +38,18 @@ const LoginContainer = () => {
           })})
         .then((data) => data.json())
         .then((data) => {
-          if (data === 'successful login and session created') toHome();
+          if (data[0] === 'successful login and session created') {
+            // update state with userId
+            updateId(data[1]);
+            toHome();
+          }
           else {
             // invalid credentials
-            console.log('FAIL');
             setInvalidLogin(true);
           }
         })
         .catch((err) => {
           console.log(err);
-          console.log('hi, you hit me!');
-          return;
         });
       }}
        className='text-white mb-5 submit-login hover:bg-sky-500 bg-sky-600 rounded-full text-md border-solid border border-sky-500'>Submit</button>
